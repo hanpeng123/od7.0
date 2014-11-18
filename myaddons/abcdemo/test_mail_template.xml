@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+
+        <!--Email template -->
+         <record id="email_template_edi_test" model="email.template">
+            <field name="name">AMT TEST - Send by Email</field>
+            <field name="email_from">${(object.user_id.email or '')|safe}</field>
+            <field name="subject">${object.company_id.name} (Ref ${object.name or 'n/a' })</field>
+            <field name="email_recipients"></field>
+            <field name="model_id" ref="abcdemo.model_amt_test"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">test</field>
+        </record> 
+    </data>
+</openerp>

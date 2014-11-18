@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="book_region_form_view">
+			<field name="name">book.region.form.view</field>
+			<field name="model">book.region</field>
+			<field name="arch" type="xml">
+				<form string="Region Form" version="7.0">
+					<sheet>
+						<group>
+							<field name="code" />
+							<field name="name" />
+							<field name="parent_region"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="book_region_tree_view">
+			<field name="name">book.region.tree.view</field>
+			<field name="model">book.region</field>
+			<field name="arch" type="xml">
+				<tree string="Region Tree" version="7.0">
+					<field name="code" nolabel="1"/>
+					<field name="name" />
+					<field name="parent_region" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="book_region_acitons">
+			<field name="name">Region</field>
+			<field name="res_model">book.region</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="book_region_tree_view" />
+			<field name="help" type="html">
+			  <p class="oe_view_nocontent_create">Here you can input region information for books.</p>
+			</field>
+		</record>
+
+
+		<menuitem id="book_main_menu" name="Family Books Management"/>
+		<menuitem id="book_base_menu" name="Base Information" parent="book_main_menu"/>
+		<menuitem id="book_region_menu" name="Region"
+			parent="book_base_menu" action="book_region_acitons" />
+
+	</data>
+</openerp>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<!-- Investment Form View -->
+		<record model="ir.ui.view" id="corp_form_view">
+			<field name="name">corp.form.view</field>
+			<field name="model">longcheng.corp</field>
+			<field name="arch" type="xml">
+				<form string="Corp Form" version="7.0">
+					<sheet>
+						<group>
+							<field name="code" />
+							<field name="name" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- Investment Tree View -->
+		<record model="ir.ui.view" id="corp_tree_view">
+			<field name="name">corp.tree.view</field>
+			<field name="model">longcheng.corp</field>
+			<field name="arch" type="xml">
+				<tree string="Corp Tree" version="7.0">
+					<field name="code" />
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- Investment action -->
+		<record model="ir.actions.act_window" id="corp_action">
+			<field name="name">Companies Information</field>
+			<field name="res_model">longcheng.corp</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="corp_tree_view" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">You can maintain company information here.</p>
+			</field>
+		</record>
+		
+		<!-- menuitems -->
+		<menuitem id="investment_main" name="Longcheng Investment"/>
+		<menuitem id="investment_baseinfo_menu" name="Base Information" parent="investment_main"/>
+		<menuitem id="investment_corp_menu" name="Enterprise" parent="investment_baseinfo_menu" action="corp_action"/>
+	</data>
+</openerp>

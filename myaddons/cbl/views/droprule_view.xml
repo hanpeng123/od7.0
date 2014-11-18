@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<!-- SubInvoice Tree View -->
+		<record model="ir.ui.view" id="dropout_rule_tree_view">
+			<field name="name">dropout.rule.form.view</field>
+			<field name="model">cbl.dropout.rule</field>
+			<field name="arch" type="xml">
+				<tree string="Dropout rule Tree" version="7.0">
+					<field name="code" />
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="dropout_ruleline_tree_view">
+			<field name="name">dropout.rule.form.view</field>
+			<field name="model">cbl.dropout.rule.line</field>
+			<field name="arch" type="xml">
+				<tree string="Dropout rule line Tree" version="7.0" editable="bottom">
+					<field name="days" />
+					<field name="action" />
+				</tree>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="dropout_ruleline_mr_tree_view">
+			<field name="name">dropout.rule.form.view</field>
+			<field name="model">cbl.mail.recorder</field>
+			<field name="arch" type="xml">
+				<tree string="Dropout rule line Tree" version="7.0">
+					<field name="mailstatus" />
+					<field name="date_order" />
+					<field name="ts"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="dropout_rule_form_view">
+			<field name="name">dropout.rule.form.view</field>
+			<field name="model">cbl.dropout.rule</field>
+			<field name="arch" type="xml">
+				<form string="Dropout rule Tree" version="7.0">
+					<sheet>
+						<group>
+							<field name="code" />
+							<field name="name" />
+							<field name="line_ids">
+								<form string="line information" version="7.0"
+									context="{'tree_view_ref':'dropout_ruleline_tree_view'}">
+								</form>
+							</field>
+						</group>
+					</sheet>
+
+				</form>
+			</field>
+		</record>
+
+		<!-- Subinvoice action -->
+		<record model="ir.actions.act_window" id="dropout_rule_action">
+			<field name="name">Dropout Rule</field>
+			<field name="res_model">cbl.dropout.rule</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="dropout_rule_tree_view" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Here are dropout rules.</p>
+			</field>
+		</record>
+
+		<!-- menuitems -->
+		<menuitem id="cbl_dropout_rule_menu" name="Dropout Rules"
+			parent="account.menu_finance_receivables" action="dropout_rule_action" />
+
+		
+	</data>
+</openerp>

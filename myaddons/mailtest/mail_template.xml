@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+
+        <!--Email template -->
+         <record id="mailtest_template" model="email.template">
+            <field name="name">hanpeng mail test...</field>
+            <field name="email_from">${(object.user_email)}</field>
+            <field name="email_to">${object.email}</field>
+            <field name="subject">hello,this mail is automated send by system.</field>
+            <field name="model_id" ref="mailtest.model_hp_mailtest"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">test.hello,world!</field>
+        </record>
+    </data>
+</openerp>

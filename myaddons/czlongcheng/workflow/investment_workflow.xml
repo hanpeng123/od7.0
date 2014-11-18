@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="workflow" id="longcheng_investment3">
+			<field name="name">longcheng.investment.main</field>
+			<field name="osv">longcheng.invetstment</field>
+			<field name="on_create">True</field>
+		</record>
+
+		<record model="workflow.activity" id="longcheng_investment_draft">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="flow_start">True</field>
+			<field name="name">draft</field>
+			<field name="kind">function</field>
+			<field name="action">investment_draft()</field>
+		</record>
+		
+		<record model="workflow.activity" id="longcheng_investment_cancel">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="flow_start">True</field>
+			<field name="name">cancel</field>
+			<field name="kind">function</field>
+			<field name="action">investment_draft()</field>
+		</record>
+		
+		<record model="workflow.activity" id="longcheng_investment_open">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="name">open</field>
+			<field name="kind">function</field>
+			<field name="action">investment_open()</field>
+		</record>
+		
+		<record model="workflow.activity" id="longcheng_investment_lc">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="name">lc</field>
+			<field name="kind">function</field>
+			<field name="flow_stop">true</field>
+			<field name="action">investment_lc()</field>
+		</record>
+		
+		<record model="workflow.activity" id="longcheng_investment_group">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="name">group</field>
+			<field name="kind">function</field>
+			<field name="action">investment_group()</field>
+		</record>
+		
+		<record model="workflow.activity" id="longcheng_investment_approve">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="name">approve</field>
+			<field name="kind">function</field>
+			<field name="action">investment_approve()</field>
+		</record>
+		
+		<record model="workflow.activity" id="longcheng_investment_approve_refuse">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="name">approve_refuse</field>
+			<field name="kind">function</field>
+			<field name="flow_stop">true</field>
+			<field name="action">investment_approve_refuse()</field>
+		</record>
+		
+		<record model="workflow.activity" id="longcheng_investment_ddi">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="name">ddi</field>
+			<field name="kind">function</field>
+			<field name="action">investment_ddi()</field>
+		</record>
+		
+		<record model="workflow.activity" id="longcheng_investment_fupan">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="name">fupan</field>
+			<field name="kind">function</field>
+			<field name="action">investment_fupan()</field>
+		</record>
+		
+		<record model="workflow.activity" id="longcheng_investment_pingshen">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="name">pingshen</field>
+			<field name="kind">function</field>
+			<field name="action">investment_pingshen()</field>
+		</record>
+		
+		<record model="workflow.activity" id="longcheng_investment_toushen">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="name">toushen</field>
+			<field name="kind">function</field>
+			<field name="action">investment_toushen()</field>
+		</record>
+		
+		<record model="workflow.activity" id="longcheng_investment_guohui">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="name">guohui</field>
+			<field name="kind">function</field>
+			<field name="action">investment_guohui()</field>
+		</record>
+		
+		<record model="workflow.activity" id="longcheng_investment_enterprise">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="name">enterprise</field>
+			<field name="kind">subflow</field>
+			<field name="subflow_id" search="[('name','=','etp.base.wkf')]"/>
+			<field name="action">investment_enterprise()</field>
+		</record>
+
+		<record model="workflow.activity" id="longcheng_investment_done">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="name">done</field>
+			<field name="flow_stop">true</field>
+			<field name="kind">function</field>
+			<field name="action">investment_done()</field>
+		</record>
+		
+		<record model="workflow.activity" id="longcheng_investment_guohui_refuse">
+			<field name="wkf_id" ref="longcheng_investment3" />
+			<field name="name">guohui_refuse</field>
+			<field name="flow_stop">true</field>
+			<field name="kind">function</field>
+			<field name="action">investment_guohui_refuse()</field>
+		</record>
+
+
+		<record model="workflow.transition" id="investment_t1">
+			<field name="act_from" ref="longcheng_investment_draft" />
+			<field name="act_to" ref="longcheng_investment_open" />
+			<field name="signal">open</field>
+		</record>
+		
+		<record model="workflow.transition" id="investment_t2">
+			<field name="act_from" ref="longcheng_investment_open" />
+			<field name="act_to" ref="longcheng_investment_group" />
+			<field name="signal">group</field>
+		</record>
+		
+		<record model="workflow.transition" id="investment_t3">
+			<field name="act_from" ref="longcheng_investment_open" />
+			<field name="act_to" ref="longcheng_investment_lc" />
+			<field name="signal">lc</field>
+		</record>
+		
+		<record model="workflow.transition" id="investment_t4">
+			<field name="act_from" ref="longcheng_investment_group" />
+			<field name="act_to" ref="longcheng_investment_approve" />
+			<field name="signal">approve</field>
+		</record>
+		
+		<record model="workflow.transition" id="investment_t5">
+			<field name="act_from" ref="longcheng_investment_approve" />
+			<field name="act_to" ref="longcheng_investment_ddi" />
+			<field name="signal">ddi</field>
+		</record>
+		
+		<record model="workflow.transition" id="investment_t6">
+			<field name="act_from" ref="longcheng_investment_group" />
+			<field name="act_to" ref="longcheng_investment_approve_refuse" />
+			<field name="signal">cancel</field>
+		</record>
+		
+		<record model="workflow.transition" id="investment_t7">
+			<field name="act_from" ref="longcheng_investment_ddi" />
+			<field name="act_to" ref="longcheng_investment_fupan" />
+			<field name="signal">fupan</field>
+		</record>
+		
+		<record model="workflow.transition" id="investment_t9">
+			<field name="act_from" ref="longcheng_investment_fupan" />
+			<field name="act_to" ref="longcheng_investment_pingshen" />
+			<field name="signal">pingshen</field>
+		</record>
+		
+		<record model="workflow.transition" id="investment_t10">
+			<field name="act_from" ref="longcheng_investment_pingshen" />
+			<field name="act_to" ref="longcheng_investment_toushen" />
+			<field name="signal">toushen</field>
+		</record>
+		
+		<record model="workflow.transition" id="investment_t11">
+			<field name="act_from" ref="longcheng_investment_toushen" />
+			<field name="act_to" ref="longcheng_investment_guohui" />
+			<field name="signal">guohui</field>
+		</record>
+		
+		<record model="workflow.transition" id="investment_t14">
+			<field name="act_from" ref="longcheng_investment_toushen" />
+			<field name="act_to" ref="longcheng_investment_guohui_refuse" />
+			<field name="signal">guohui_refuse</field>
+		</record>
+		
+		<record model="workflow.transition" id="investment_t12">
+			<field name="act_from" ref="longcheng_investment_guohui" />
+			<field name="act_to" ref="longcheng_investment_enterprise" />
+			<field name="signal">enterprise</field>
+		</record>
+		
+		<record model="workflow.transition" id="investment_t13">
+			<field name="act_from" ref="longcheng_investment_enterprise" />
+			<field name="act_to" ref="longcheng_investment_done" />
+			<field name="signal">subflow.payment</field>
+		</record>
+		
+		<record model="workflow.transition" id="investment_t15">
+			<field name="act_from" ref="longcheng_investment_enterprise" />
+			<field name="act_to" ref="longcheng_investment_cancel" />
+			<field name="signal">subflow.cancel</field>
+		</record>
+
+	</data>
+</openerp>

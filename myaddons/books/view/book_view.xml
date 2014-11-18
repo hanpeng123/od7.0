@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="boo_book_form_view">
+			<field name="name">book.book.form.view</field>
+			<field name="model">book.book</field>
+			<field name="arch" type="xml">
+				<form string="Author Form" version="7.0">
+					<sheet>
+						<field name="image" widget='image' class="oe_avatar oe_left"
+							options='{"preview_image": "image_medium"}' />
+						<div class="oe_title">
+							<h3>
+								<field name="name" default_focus="1" placeholder="Name" />
+							</h3>
+							<h3>
+								<field name="auth_id" placeholder="Author" />
+							</h3>
+						</div>
+						<group>
+							<group>
+								<field name="isbn" />
+								<field name="cat_ids" widget="many2many_tags" placeholder="Category" />
+								<field name="pub_ids" widget="many2many_tags" placeholder="Publisher" />
+								<field name="gotdate" />
+								<field name="medium" />
+							</group>
+							<group>
+								<field name="tran_id" widget="many2many_tags" placeholder="Translator"
+									select="1" />
+								<field name="word_number" />
+								<field name="price" />
+								<field name="booknumber" />
+								<field name="howtoget" />
+							</group>
+						</group>
+						<group>
+							<field name="introduction" />
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" />
+						<field name="message_ids" widget="mail_thread" />
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="boo_book_tree_view">
+			<field name="name">book.book.tree.view</field>
+			<field name="model">book.book</field>
+			<field name="priority" eval="1"/>
+			<field name="arch" type="xml">
+				<tree string="Book Tree" version="7.0">
+					<field name="name" />
+					<field name="isbn" />
+					<field name="auth_id" />
+				</tree>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="boo_book_tree_view2">
+			<field name="name">book.book.tree.view2</field>
+			<field name="model">book.book</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+				<tree string="Book Tree" version="7.0" edit="false" create="false" delete="false">
+					<field name="name" />
+					<field name="isbn" />
+					<field name="auth_id" />
+					<field name="medium"/>
+					<field name="word_number"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="boo_book_acitons">
+			<field name="name">Book</field>
+			<field name="res_model">book.book</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="boo_book_tree_view" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Here you can input books information.</p>
+			</field>
+		</record>
+
+
+
+		<menuitem id="book_mgt_menu" name="Books Management" parent="book_main_menu" />
+		<menuitem id="boo_book_menu" name="Books" parent="book_mgt_menu"
+			action="boo_book_acitons" />
+
+	</data>
+</openerp>

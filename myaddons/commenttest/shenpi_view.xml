@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="shenpi_form_view">
+			<field name="name">shenpi.form.view</field>
+			<field name="model">oa.shenpi</field>
+			<field name="arch" type="xml">
+				<form string="Form" version="7.0">
+					<sheet>
+						<group>
+							<field name="code" />
+							<field name="name" />
+						</group>
+						<group>
+							<div class="oe_edit_only">
+								<label for="comments" string="Commnets" />
+								<field name="comments" placeholder="you can here enter your comments..." />
+							</div>
+						</group>
+						<group>
+							<field name="comm_ids"
+								context="{'form_view_ref':'commenttest.comments_form_view','tree_view_ref':'commenttest.comments_tree_view'}" />
+							/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="shenpi_tree_view">
+			<field name="name">shenpi.form.view</field>
+			<field name="model">oa.shenpi</field>
+			<field name="arch" type="xml">
+				<tree string="shenpi tree view" version="7.0">
+					<field name="code" />
+					<field name="name" />
+					<field name="comments" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="shenpi_action">
+			<field name="name">Test Shenpi</field>
+			<field name="res_model">oa.shenpi</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="shenpi_tree_view" />
+		</record>
+
+
+		<menuitem id="shenpi_menu" name="shenpi Test"
+			parent="mailtest.mail_test_mail_menu" action="shenpi_action" />
+
+		<record model="ir.ui.view" id="comments_form_view">
+			<field name="name">comm.form.view</field>
+			<field name="model">oa.comment</field>
+			<field name="arch" type="xml">
+				<form string="Form" version="7.0" edit="false" create="false"
+					delete="false">
+					<sheet>
+						<group>
+							<field name="shenpi_id" />
+							<field name="comments" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="comments_tree_view">
+			<field name="name">comm.form.view</field>
+			<field name="model">oa.comment</field>
+			<field name="arch" type="xml">
+				<tree string="shenpi tree view" version="7.0" edit="false"
+					create="false" delete="false">
+					<field name="shenpi_id" />
+					<field name="comments" />
+				</tree>
+			</field>
+		</record>
+
+
+	</data>
+</openerp>

@@ -1,0 +1,41 @@
+create SEQUENCE inv_sq
+start with 1
+no MINVALUE
+no MAXVALUE
+no CYCLE
+increment by 1;
+--
+
+create or replace function modi_comments() returns trigger as $modi_comm_trigger$
+BEGIN
+    new.dummy_comments=new.comments;
+    new.comments=null;
+    return new;
+end;
+$modi_comm_trigger$ LANGUAGE plpgsql;
+
+create or replace function save_comments() returns trigger as $save_comm_trigger$
+BEGIN
+    insert into longcheng_investment_comment(id,invest_id,statuslog,userid,ts,comments) 
+     values(nextval('inv_sq'),new.id,new.status_log,new.write_uid,new.write_date,new.dummy_comments);
+    return new;
+end;
+$save_comm_trigger$ LANGUAGE plpgsql;
+--
+drop trigger if exists save_comment_info on longcheng_invetstment;
+CREATE TRIGGER save_comment_info after update of comments,state ON longcheng_invetstment FOR EACH ROW EXECUTE PROCEDURE save_comments();
+--
+drop trigger if exists modi_comment_info on longcheng_invetstment;
+CREATE TRIGGER modi_comment_info before update of comments,state ON longcheng_invetstment FOR EACH ROW EXECUTE PROCEDURE modi_comments();
+---
+create or replace function force_workflow_done() returns trigger as $force_done$
+BEGIN
+    update longcheng_invetstment set state='done' where id=new.main_no and new.state='close';
+    update longcheng_invetstment set state='cancel' where id=new.main_no and new.state in ('cancel','refuse_agreement');
+    return new;
+end;
+$force_done$ LANGUAGE plpgsql;
+--
+drop trigger if exists force_workflow_tran on longcheng_enterprise;
+CREATE TRIGGER force_workflow_tran after update of state ON longcheng_enterprise FOR EACH ROW EXECUTE PROCEDURE force_workflow_done();
+--

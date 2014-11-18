@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="workflow" id="wkf_etp_base">
+			<field name="name">etp.base.wkf</field>
+			<field name="osv">longcheng.enterprise</field>
+			<field name="on_create">True</field>
+		</record>
+
+		<record model="workflow.activity" id="act_draft">
+			<field name="wkf_id" ref="wkf_etp_base" />
+			<field name="flow_start">True</field>
+			<field name="name">draft</field>
+			<field name="kind">function</field>
+			<field name="action">enterprise_base_draft()</field>
+		</record>
+
+		<record model="workflow.activity" id="act_open">
+			<field name="wkf_id" ref="wkf_etp_base" />
+			<field name="name">open</field>
+			<field name="kind">function</field>
+			<field name="action">enterprise_base_open()</field>
+		</record>
+
+
+		<record model="workflow.activity" id="act_offer">
+			<field name="wkf_id" ref="wkf_etp_base" />
+			<field name="name">offer</field>
+			<field name="kind">function</field>
+			<field name="action">enterprise_base_offer()</field>
+		</record>
+
+		<record model="workflow.activity" id="act_payment_request">
+			<field name="wkf_id" ref="wkf_etp_base" />
+			<field name="name">payment_request</field>
+			<field name="kind">function</field>
+			<field name="action">enterprise_base_payment_request()</field>
+		</record>
+		
+		<record model="workflow.activity" id="act_agreement">
+			<field name="wkf_id" ref="wkf_etp_base" />
+			<field name="name">agreement</field>
+			<field name="kind">function</field>
+			<field name="action">enterprise_base_agreement()</field>
+		</record>
+
+		<record model="workflow.activity" id="act_agree_agreement">
+			<field name="wkf_id" ref="wkf_etp_base" />
+			<field name="name">agree_agreement</field>
+			<field name="kind">function</field>
+			<field name="action">enterprise_base_agree_agreement()</field>
+		</record>
+
+		<record model="workflow.activity" id="act_refuse_agreement">
+			<field name="wkf_id" ref="wkf_etp_base" />
+			<field name="name">refuse_agreement</field>
+			<field name="kind">function</field>
+			<field name="action">enterprise_base_refuse_agreement()</field>
+			<field name="flow_stop">True</field>
+		</record>
+		
+		<record model="workflow.activity" id="act_attach">
+			<field name="wkf_id" ref="wkf_etp_base" />
+			<field name="name">attach</field>
+			<field name="kind">function</field>
+			<field name="action">enterprise_base_attach()</field>
+		</record>
+
+
+		<record model="workflow.activity" id="act_close">
+			<field name="wkf_id" ref="wkf_etp_base" />
+			<field name="name">close</field>
+			<field name="kind">function</field>
+			<field name="action">enterprise_base_close()</field>
+			<field name="flow_stop">True</field>
+		</record>
+
+		<record model="workflow.activity" id="act_cancel">
+			<field name="wkf_id" ref="wkf_etp_base" />
+			<field name="name">cancel</field>
+			<field name="kind">function</field>
+			<field name="action">enterprise_base_cancel()</field>
+			<field name="flow_stop">True</field>
+		</record>
+
+		<record model="workflow.transition" id="t1">
+			<field name="act_from" ref="act_draft" />
+			<field name="act_to" ref="act_open" />
+			<field name="signal">open</field>
+		</record>
+
+		<record model="workflow.transition" id="t2">
+			<field name="act_from" ref="act_open" />
+			<field name="act_to" ref="act_offer" />
+			<field name="signal">offer</field>
+		</record>
+
+		<record model="workflow.transition" id="t4">
+			<field name="act_from" ref="act_open" />
+			<field name="act_to" ref="act_cancel" />
+			<field name="signal">cancel</field>
+		</record>
+		
+		<record model="workflow.transition" id="t5">
+			<field name="act_from" ref="act_offer" />
+			<field name="act_to" ref="act_payment_request" />
+			<field name="signal">payment_request</field>
+		</record>
+		
+		<record model="workflow.transition" id="t6">
+			<field name="act_from" ref="act_payment_request" />
+			<field name="act_to" ref="act_agreement" />
+			<field name="signal">agreement</field>
+		</record>
+		
+		<record model="workflow.transition" id="t7">
+			<field name="act_from" ref="act_agreement" />
+			<field name="act_to" ref="act_agree_agreement" />
+			<field name="signal">agree_agreement</field>
+		</record>
+		
+		<record model="workflow.transition" id="t8">
+			<field name="act_from" ref="act_agreement" />
+			<field name="act_to" ref="act_refuse_agreement" />
+			<field name="signal">refuse_agreement</field>
+		</record>
+		
+		<record model="workflow.transition" id="t9">
+			<field name="act_from" ref="act_agree_agreement" />
+			<field name="act_to" ref="act_attach" />
+			<field name="signal">attach</field>
+		</record>
+		
+		<record model="workflow.transition" id="t10">
+			<field name="act_from" ref="act_attach" />
+			<field name="act_to" ref="act_close" />
+			<field name="signal">close</field>
+		</record>
+
+	</data>
+</openerp>

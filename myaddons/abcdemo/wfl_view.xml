@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="amt_wkf01_form_view">
+			<field name="name">amt.wkf01.form.view</field>
+			<field name="model">amt.wfl01</field>
+			<field name="arch" type="xml">
+				<form string="Form" version="7.0">
+					<header>
+						<button name="test_email" string="Send by mail" type="object" />
+						<button name="process" string="Open" states="draft" class="oe_highlight" />
+						<button name="done" string="Next01.." states="process"
+							class="oe_highlight" />
+						<field name="state" widget="statusbar" statusbar_visible="draft,process,done" />
+					</header>
+					<sheet>
+						<group>
+							<field name="code" />
+							<field name="name" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="amt_wkf01_tree_view">
+			<field name="name">amt.wkf01.form.view</field>
+			<field name="model">amt.wfl01</field>
+			<field name="arch" type="xml">
+				<tree string="tree workflow01" version="7.0">
+					<field name="code" />
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="wkf01_action">
+			<field name="name">Workflow01</field>
+			<field name="res_model">amt.wfl01</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="amt_wkf01_tree_view" />
+		</record>
+
+
+		<menuitem id="amt_wfl01_menu" name="workflowTests" parent="amt_test_main_menu" />
+		<menuitem id="amt_test_wfl01_mail" name="Workflow01" parent="amt_wfl01_menu"
+			action="wkf01_action" />
+
+
+
+		<record model="ir.ui.view" id="amt_wkf02_form_view">
+			<field name="name">amt.wkf01.form.view</field>
+			<field name="model">amt.wfl02</field>
+			<field name="arch" type="xml">
+				<form string="Form" version="7.0">
+					<header>
+						<button name="agreement" string="Agreement" states="doc" class="oe_highlight" />
+						<button name="payment" string="Payment" states="agreement"
+							class="oe_highlight" />
+						<field name="state" widget="statusbar" statusbar_visible="doc,agreement,payment" />
+					</header>
+					<sheet>
+						<group>
+							<field name="code" />
+							<field name="name" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="amt_wkf02_tree_view">
+			<field name="name">amt.wkf02.tree.view</field>
+			<field name="model">amt.wfl02</field>
+			<field name="arch" type="xml">
+				<tree string="tree workflow02" version="7.0">
+					<field name="code" />
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+		
+
+		<record model="ir.actions.act_window" id="wkf02_action">
+			<field name="name">Workflow02</field>
+			<field name="res_model">amt.wfl02</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="amt_wkf02_tree_view" />
+		</record>
+
+
+
+		<menuitem id="amt_test_wfl02_mail" name="Workflow02" parent="amt_wfl01_menu"
+			action="wkf02_action" />
+	</data>
+</openerp>

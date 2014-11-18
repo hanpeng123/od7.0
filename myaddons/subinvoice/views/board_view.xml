@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record model="ir.actions.act_window" id="subinvoice_action_board">
+			<field name="res_model">account.sub.invoice.rule</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="subinvoice_tree_view" />
+		</record>
+
+		<record model="ir.actions.act_window" id="subinvoiceline_action_board">
+			<field name="res_model">sale.order</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">graph</field>
+			<field name="view_id" ref="sale.view_sale_order_graph" />
+		</record>
+
+		<record model="ir.actions.act_window" id="testwind_action_board">
+			<field name="res_model">test.parent.window</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="pp_tree_view" />
+		</record>
+
+		<record model="ir.ui.view" id="board_test_view">
+			<field name="name">hello.world</field>
+			<field name="model">board.board</field>
+			<field name="arch" type="xml">
+				<form string="test" version="7.0">
+					<board style="1-1"><!-- 1-1:左右两列的比例相等，2-1：表示左列是右列的2倍。 -->
+						<column>
+							<action string="inv" name="%(subinvoice_action_board)d"
+								colspan="4" />
+							<action string="window" name="%(testwind_action_board)d"
+								colspan="4" />
+						</column>
+						<column>
+							<action string="line" name="%(subinvoiceline_action_board)d"
+								colspan="4" />
+						</column>
+					</board>
+
+				</form>
+			</field>
+		</record>
+
+
+
+		<record model="ir.actions.act_window" id="myboard_action">
+			<field name="name">Test Board</field>
+			<field name="res_model">board.board</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="usage">menu</field>
+			<field name="view_id" ref="board_test_view" />
+		</record>
+
+
+		<!-- menuitems -->
+		<menuitem id="hanpeng_board_menu" name="Hpboard" action="myboard_action" />
+		<menuitem id="hanpeng_board_second" name="hanpnegboard"
+			sequence="0" parent="hanpeng_board_menu" />
+		<menuitem id="hanpeng_third" name="My board" sequence="1"
+			icon="terp-graph" parent="hanpeng_board_second" action="myboard_action" />
+	</data>
+</openerp>

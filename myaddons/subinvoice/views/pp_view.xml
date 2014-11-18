@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="pp_tree_view">
+			<field name="name">subinvoice.rule.line.tree.view</field>
+			<field name="model">test.parent.window</field>
+			<field name="arch" type="xml">
+				<tree string="Subinvoice Rule Tree" version="7.0">
+					<field name="code" />
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- SubInvoice Form View -->
+		<record model="ir.ui.view" id="pp_form_view">
+			<field name="name">subinvoice.form.view</field>
+			<field name="model">test.parent.window</field>
+			<field name="arch" type="xml">
+				<form string="Subinvoice Form" version="7.0">
+					<header>
+						<button name="open_child" string="Open Child Window" type="object" />
+					</header>
+					<sheet>
+						<group>
+							<field name="code" />
+							<field name="name" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- SubInvoice Tree View -->
+		<record model="ir.ui.view" id="pc_tree_view">
+			<field name="name">subinvoice.tree.view</field>
+			<field name="model">test.child.window</field>
+			<field name="arch" type="xml">
+				<tree string="Subinvoice Tree" version="7.0">
+					<field name="code" />
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="pc_form_view">
+			<field name="name">subinvoice.form.view</field>
+			<field name="model">test.child.window</field>
+			<field name="arch" type="xml">
+				<form string="Subinvoice Form" version="7.0">
+					<sheet>
+						<group>
+							<field name="code" />
+							<field name="name" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- Subinvoice action -->
+		<record model="ir.actions.act_window" id="pp_action">
+			<field name="name">Sub Invoice Information</field>
+			<field name="res_model">test.parent.window</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="pp_tree_view" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Here are Sub-invoice rules.</p>
+			</field>
+		</record>
+
+		<!-- menuitems -->
+		<menuitem id="context_menu" name="Test Context"
+			parent="account.menu_finance_receivables" action="pp_action" />
+	</data>
+</openerp>

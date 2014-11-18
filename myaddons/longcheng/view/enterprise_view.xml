@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<!-- enterprise form view -->
+		<record model="ir.ui.view" id="enterprise_base_form_view">
+			<field name="name">Enterprise Form View</field>
+			<field name="model">longcheng.enterprise</field>
+			<field name="arch" type="xml">
+				<form string="Enterprise From" version="7.0">
+					<header>
+						<button name="open" string="Open" states="draft" class="oe_highlight" groups="longcheng.group_etp_user"/>
+						<button name="offer" string="Next01.." states="open"
+							class="oe_highlight" groups="longcheng.group_check_manager"/>
+						<button name="cancel" string="Refuse Open" states="open"
+							class="oe_highlight"  groups="longcheng.group_check_manager"/>
+						<button name="payment_request" string="Next02..." states="offer"
+							class="oe_highlight"  groups="longcheng.group_etp_user"/>
+						<button name="agreement" string="Next03..." states="payment_request"
+							class="oe_highlight"  groups="longcheng.group_check_manager"/>
+						<button name="agree_agreement" string="Agree Agreement"
+							states="agreement" class="oe_highlight"  groups="longcheng.group_check_manager"/>
+						<button name="refuse_agreement" string="Refuse Agreement"
+							states="agreement" class="oe_highlight"  groups="longcheng.group_check_manager"/>
+						<button name="attach" string="Next4..." states="agree_agreement"
+							class="oe_highlight"  groups="longcheng.group_check_manager"/>
+						<button name="close" string="Done" states="attach" class="oe_highlight"  groups="longcheng.group_etp_user"/>
+						<field name="state" widget="statusbar"
+							statusbar_visible="open,offer,payment_request,agreement,attach,close" />
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" attrs="{'readonly':[('state','!=','draft')]}" />
+								<field name="establish_date" attrs="{'readonly':[('state','!=','draft')]}" />
+								<field name="capital" attrs="{'readonly':[('state','!=','draft')]}" />
+							</group>
+							<group>
+								<field name="code" attrs="{'readonly':[('state','!=','draft')]}" />
+								<field name="area" attrs="{'readonly':[('state','!=','draft')]}" />
+								<field name="scale" attrs="{'readonly':[('state','!=','draft')]}" />
+							</group>
+							<group>
+								<field name="emp_num_total" attrs="{'readonly':[('state','!=','draft')]}" />
+								<field name="emp_num_rd" attrs="{'readonly':[('state','!=','draft')]}" />
+							</group>
+							<group>
+								<field name="ishightech" attrs="{'readonly':[('state','!=','draft')]}" />
+							</group>
+						</group>
+						<group>
+							<notebook>
+								<page string="Attachment" attrs="{'invisible':[('state','not in',('offer','attach'))]}">
+									<group>
+										<field name="doc4agreement"  attrs="{'required':[('state','=','offer')],'invisible':[('state','!=','offer')]}"/>
+									</group>
+									<group>
+										<field name="attach4payment" attrs="{'required':[('state','=','attach')],'invisible':[('state','!=','attach')]}" />
+									</group>
+								</page>
+								<page string="Contacts">
+									<group>
+										<group>
+											<field name="faren" attrs="{'readonly':[('state','!=','draft')]}" />
+											<field name="faren_phone" attrs="{'readonly':[('state','!=','draft')]}" />
+											<field name="faren_mail" attrs="{'readonly':[('state','!=','draft')]}" widget="email"/>
+										</group>
+										<group>
+											<field name="finleader" attrs="{'readonly':[('state','!=','draft')]}" />
+											<field name="fin_phone" attrs="{'readonly':[('state','!=','draft')]}" />
+											<field name="fin_mail" attrs="{'readonly':[('state','!=','draft')]}" widget="email"/>
+										</group>
+									</group>
+								</page>
+								<page string="Patent">
+									<group>
+										<field name="patent_id" attrs="{'readonly':[('state','!=','draft')]}">
+											<tree strig="Patent Editable Lines" editable="bottom">
+												<field name="name"  />
+												<field name="howtoget" />
+												<field name="values" />
+											</tree>
+										</field>
+									</group>
+								</page>
+							</notebook>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" />
+						<field name="message_ids" widget="mail_thread" />
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<!-- enterprise tree view -->
+
+		<record model="ir.ui.view" id="enterprise_base_tree_view">
+			<field name="name">Enterprise Tree</field>
+			<field name="model">longcheng.enterprise</field>
+			<field name="arch" type="xml">
+				<tree string="Enterprise Tree view" version="7.0" colors="green:state=='close';red:state in ('cancel','refuse_agreement');blue:state not in ('draft','close','refuse_agreement','cancel')" >
+					<field name="name" />
+					<field name="code" />
+					<field name="establish_date" />
+					<field name="scale" />
+					<field name="emp_num_total" sum="Employees" />
+					<field name="capital" sum="Capital" />
+					<field name="area" />
+					<field name="state"/>
+					<field name="creater"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_longcheng_patent_graph" model="ir.ui.view">
+			<field name="name">longcheng.patent.sqlreport.graph</field>
+			<field name="model">longcheng.enterprise</field>
+			<field name="arch" type="xml">
+				<graph string="Pantent Analysis">
+					<field name="name" group="True" />
+					<field name="capital" />
+				</graph>
+			</field>
+		</record>
+
+		<!-- search view -->
+
+		<record id="view_enterprise_search" model="ir.ui.view">
+			<field name="name">Enterprise.search.view</field>
+			<field name="model">longcheng.enterprise</field>
+			<field name="arch" type="xml">
+				<search string="Search Enterprise">
+					<field name="name" string="Search Enterprise"
+						filter_domain="['|',('name','ilike',self),'|',('area','ilike',self),('finleader','ilike',self)]" />
+					<filter icon="terp-mail-message-new" string="Unclosed Workflow"
+						name="filtername" domain="[('state','!=','close')]" />
+					<separator />
+					<filter icon="terp-document-new" string="Shanghai" name="area"
+						domain="[('area','=','上海')]" help="Show enterprises in shanghai." />
+					<group expand="0" string="Group By...">
+						<filter string="Area" icon="terp-personal" domain="[]"
+							context="{'group_by':'area'}" />
+						<filter string="Scale" icon="terp-personal" domain="[]"
+							context="{'group_by':'scale'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<!-- actions -->
+
+		<record model="ir.actions.act_window" id="enterprise_base_actions">
+			<field name="name">Enterprise Information</field>
+			<field name="res_model">longcheng.enterprise</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,graph</field>
+			<field name="search_view_id" ref="view_enterprise_search" />
+			<field name="context">{"search_default_name":"kong","search_default_filtername":1}</field>
+			<field name="view_id" ref="enterprise_base_tree_view" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Here you can enter the information about enterprise.</p>
+			</field>
+		</record>
+
+		<!-- menuitem -->
+		<menuitem id="enterprise_main_menu" name="Longcheng Yingcai Investment Workflow" />
+		<menuitem id="enterprise_baseinfo_menu" name="Base Information"
+			parent="enterprise_main_menu" />
+		<menuitem id="enterprise_enterprise_menu" name="Enterprise"
+			parent="enterprise_baseinfo_menu" action="enterprise_base_actions" />
+	</data>
+</openerp>
