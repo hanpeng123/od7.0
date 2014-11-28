@@ -1,6 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-enterprise_all,enterprise_all,model_longcheng_enterprise,longcheng.group_all_enterprise,1,1,1,1
-enterprise_notcreate,enterprise_notcreate,model_longcheng_enterprise,longcheng.group_check_manager,1,1,0,1
-enterprise_full,enterprise_full,model_longcheng_enterprise,,1,1,1,0
-patent_view,patent_view,model_longcheng_patent,,1,1,1,1
-patent_full,patent_full,model_longcheng_patentinfo,longcheng.group_all_enterprise,1,1,1,1
